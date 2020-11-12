@@ -5,8 +5,7 @@
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
-            {{ form.movieTitle.label }}<br>
-            {{ form.movieTitle(size=32) }}
+            I'm looking for a {{ form.genre() }} movie from {{ form.startYear() }} to {{ form.endYear() }}
         </p>
         <p>{{ form.submit() }}</p>
     </form>

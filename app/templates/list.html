@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Most Popular {{ genre }} movies in the past {{ years }} years</h1>
+{% for movie in movies %}
+<div><p><img src={{ movieImg }} alt={{ title }}>  {{ title }} Score: {{ score }}</p> </div>
+{% endfor %}
+{% endblock %}

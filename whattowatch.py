@@ -1,16 +1,17 @@
 # This is a sample Python script.
-import omdb
-from flask import Flask
+import tmdbsimple as tmdb
+tmdb.API_KEY = '73972aa479b5ec8c31a15ff73eba8ef3'
+# from flask import Flask
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
 
-@app.route('/')
-def main():
-    API_KEY = "db933240"
-    omdb.set_default('apikey', API_KEY)
-    omdb.set_default('tomatoes', True)
+# @app.route('/')
 
-    movie = omdb.search("The hangover")
 
-    return movie[0]['title']
+discover = tmdb.Discover()
+genreChoices = tmdb.Genres().movie_list()['genres']
+formattedChoices = []
+for g in genreChoices:
+    formattedChoices.append((tuple((g['id'], g['name']))))
+print(formattedChoices)
