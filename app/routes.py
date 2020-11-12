@@ -7,6 +7,5 @@ from app.forms import MovieForm
 def index():
     form = MovieForm()
     if form.validate_on_submit():
-        flash('Information requested for movie {}'.format(
-            form.movieTitle.data))
+        genre = MovieForm.genre
     return render_template('index.html', form=form)
