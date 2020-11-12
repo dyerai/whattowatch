@@ -1,0 +1,14 @@
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }} - What to watch?</title>
+        {% else %}
+        <title>What to Watch?</title>
+        {% endif %}
+    </head>
+        <body>
+            <div>What to Watch?: <a href="/index">Home</a></div>
+            <hr>
+            {% block content %}{% endblock %}
+        </body>
+</html>
