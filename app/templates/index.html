@@ -2,10 +2,10 @@
 
 {% block content %}
     <h1>What to watch?</h1>
-    <form action="" method="post" novalidate>
+    <form action="/" method="POST">
         {{ form.hidden_tag() }}
         <p>
-            I'm looking for a {{ form.genre() }} movie from {{ form.startYear() }} to {{ form.endYear() }}
+            I'm looking for a {{ form.genre() }} movie from {{ form.year() }}
         </p>
         <p>{{ form.submit() }}</p>
     </form>

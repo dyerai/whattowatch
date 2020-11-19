@@ -6,12 +6,10 @@ tmdb.API_KEY = '73972aa479b5ec8c31a15ff73eba8ef3'
 # app = Flask(__name__)
 
 
-# @app.route('/')
-
 
 discover = tmdb.Discover()
-genreChoices = tmdb.Genres().movie_list()['genres']
-formattedChoices = []
-for g in genreChoices:
-    formattedChoices.append((tuple((g['id'], g['name']))))
-print(formattedChoices)
+genre = tmdb.Genres()
+movies = discover.movie(sort_by='vote_average', vote_count_gte=1000)['results']
+config = tmdb.Configuration()
+print(discover.movie()['results'])
+
