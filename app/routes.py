@@ -1,13 +1,14 @@
-from flask import render_template, flash, redirect
+from flask import render_template, redirect
 from app import app
 from app.forms import MovieForm
 import tmdbsimple as tmdb
 import datetime
 
-year: int
-yearname: str
+firstYear: int
+lastYear: int
 genre: int
-genrename: str
+genreName: str
+includePG: bool
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -15,16 +16,16 @@ def index():
     form = MovieForm()
     if form.validate_on_submit():
         global genre
-        global year
+        global firstYear
+        global lastYear
         global genrename
-        global yearname
+        global includePG
         genre = form.genre.data
         genrename = dict(form.genre.choices).get(form.genre.data)
-        year = form.year.data
-        yearname = dict(form.year.choices).get(form.year.data)
+        firstYear = form.firstYear.data
+        lastYear = form.lastYear.data
+        includePG = form.includePG.data
 
-        print(genre)
-        print(year)
         return redirect('/list')
     return render_template('index.html', form=form)
 
@@ -34,13 +35,22 @@ def list():
     form = MovieForm()
     discover = tmdb.Discover()
     global genre
-    global genrename
-    global year
-    global yearname
+    global genreName
+    global firstYear
+    global lastYear
+    global includePG
     # search arguments
-    formattedyear = str(datetime.datetime.now().year - year) + "-01-01"
-    movies = discover.movie(with_genres=genre, primary_release_date_gte=formattedyear, sort_by='vote_average.desc',
-                            vote_count_gte=500, with_original_language='en')['results']
+    formattedfirstyear = str(firstYear) + "-01-01"
+    formattedlastyear = str(lastYear) + "-12-31"
+    if includePG:
+        movies = discover.movie(with_genres=genre, primary_release_date_gte=formattedfirstyear,
+                                primary_release_date_lte=formattedlastyear, sort_by='vote_average.desc',
+                                vote_count_gte=500, with_original_language='en')['results']
+    else:
+        movies = discover.movie(with_genres=genre, primary_release_date_gte=formattedfirstyear,
+                                primary_release_date_lte=formattedlastyear, sort_by='vote_average.desc',
+                                vote_count_gte=500, with_original_language='en', certification_country='US',
+                                certification_gte='PG-13')['results']
     imgURL = tmdb.Configuration().info()['images']['base_url'] + "w154"
-    return render_template('list.html', movies=movies, genre=genre, years=form.year.description,
-                           imgURL=imgURL, genrename=genrename, yearname=yearname)
+    return render_template('list.html', movies=movies, genre=genre, firstYear=firstYear, lastYear=lastYear,
+                           imgURL=imgURL, genrename=genrename)

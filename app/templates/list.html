@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Most Popular {{ genrename }} movies from {{ yearname }}</h1>
+<h1>Most Popular {{ genrename }} movies in the span of {{ firstYear }} to {{ lastYear }} </h1>
 {% for movie in movies %}
-<div><p><img src={{ imgURL + movie['poster_path'] }} alt={{ movie['title'] }}>  {{ movie['title'] }} Score: {{ movie['vote_average'] }}/10</p> </div>
+<div class="movie"><p><img src={{ imgURL + movie['poster_path'] }} alt={{ movie['title'] }}>  {{ movie['title'] }}
+    Score: {{ movie['vote_average'] }}/10</p> </div>
 {% endfor %}
+<footer>All movie data has been provided by <a href="https://www.themoviedb.org/">The Movie Database</a></footer>
 {% endblock %}

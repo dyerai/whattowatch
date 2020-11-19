@@ -5,8 +5,9 @@
     <form action="/" method="POST">
         {{ form.hidden_tag() }}
         <p>
-            I'm looking for a {{ form.genre() }} movie from {{ form.year() }}
+            I'm looking for a {{ form.genre() }} movie in the span of {{ form.firstYear() }} to {{ form.lastYear() }}
         </p>
+        <p>Include kids movies? (rated PG or under) {{ form.includePG() }}</p>
         <p>{{ form.submit() }}</p>
     </form>
 {% endblock %}
